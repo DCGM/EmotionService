@@ -176,3 +176,8 @@ The JSON files contain these values for frames and pernsons (not all information
   * `[frame_id][face_id]['head_pose']` -- Head pose represented as rotation vector [rot)x, rot_y, rot_z] -- see https://en.wikipedia.org/wiki/Rodrigues%27_rotation_formula or http://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html#void Rodrigues(InputArray src, OutputArray dst, OutputArray jacobian)
   * `[frame_id][face_id]['landmarks']` -- 68 facial landmarks [x,y] -- see https://cdn-images-1.medium.com/max/800/1*AbEg31EgkbXSQehuNJBlWg.png
 
+Licenses:
+=========
+* The main module: BSD-2-Clause https://opensource.org/licenses/BSD-2-Clause
+* Licences for submodules and dependencies: Boost Software License, 3-clause BSD License, ...
+
