@@ -1,0 +1,19 @@
+CREATE TABLE sqlite_sequence(name,seq)
+
+CREATE TABLE requests (
+    "uuid" TEXT,
+    "status" TEXT,
+    "lastchange" REAL,
+    "original_name" TEXT
+, "created" REAL)
+
+CREATE TABLE jobs (
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "uuid" TEXT,
+    "command" TEXT,
+    "status" TEXT,
+    "lastchange" REAL,
+    "created" REAL,
+    "identifier" TEXT,
+    "next_job" TEXT
+)

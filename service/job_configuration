@@ -1,0 +1,11 @@
+create_directory mkdir -p ./processes/{ID}
+
+basic_detection ./scripts/01_basic_detection.sh {ID}
+
+identifiaction ./scripts/02_identification.sh {ID}
+
+head_orientation_gaze_action_units ./scripts/03_head_orientation_gaze_action_units.sh {ID}
+
+facial_expressions ./scripts/04_CNN.sh {ID}
+
+create_json ./scripts/05_json.sh {ID}

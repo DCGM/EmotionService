@@ -1,0 +1,125 @@
+<script src="binary.js"></script>
+<video id="video" autoplay></video>
+<video id="mirror" autoplay></video>
+
+    <script language="javascript" type="text/javascript">
+
+    function guid() {
+      function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
+      }
+      return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
+    }
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires="+ d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+    }
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length,c.length);
+            }
+        }
+        return "";
+    }
+
+
+    function onVideoFail(e) {
+        console.log('webcam fail!', e);
+    }
+
+    function hasGetUserMedia() {
+      // Note: Opera is unprefixed.
+      return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
+                navigator.mozGetUserMedia || navigator.msGetUserMedia);
+    }
+
+    var uid = getCookie('uid');
+    if( uid == ""){
+        uid = guid();
+        setCookie('videoID', 0, 14);
+    }
+    setCookie('uid', uid, 14);
+
+    if (hasGetUserMedia()) {
+      // Good to go!
+    } else {
+        alert('getUserMedia() is not supported in your browser');
+    }
+
+    window.URL = window.URL || window.webkitURL;
+    navigator.getUserMedia  = navigator.getUserMedia ||
+                             navigator.webkitGetUserMedia ||
+                              navigator.mozGetUserMedia ||
+                               navigator.msGetUserMedia;
+
+    var mirror = document.getElementById('mirror');
+    var video = document.getElementById('video');
+    var streamRecorder;
+    var outStream;
+    var client = new BinaryClient('wss://pchradis.fit.vutbr.cz:9001/id000');
+    var recorder;
+
+    video.src = 'test.webm'
+    client.on('open', function(stream){
+        console.log('Have instream.');
+
+        if (navigator.getUserMedia) {
+          navigator.getUserMedia({audio: true, video: true}, function(stream) {
+            mirror.src = window.URL.createObjectURL(stream);
+            /*var options = {
+              audioBitsPerSecond : 12800,
+              videoBitsPerSecond : 250000
+              mimeType : 'video/vp9'
+            }*/
+            recorder = new MediaRecorder(stream);
+
+            recorder.onstart = function() {
+                var videoID = +getCookie('videoID') + 1
+                outStream = client.createStream({uID: getCookie('uid'), vidID: videoID})
+                console.log("Sending", identifier)
+                setCookie('videoID', videoID, 14);
+            }
+            recorder.ondataavailable = function(e) {
+                console.log('available');
+                outStream.write(e.data)
+            }
+            recorder.onstop = function(e) {
+                outStream.end()
+            }
+          }, onVideoFail);
+        } else {
+            alert ('failed');
+        }
+    });
+
+    function startRecording(r) {
+        if( r.status != 'recording'){
+            console.log('recording start')
+            r.start(500);
+        }
+    }
+
+    function stopRecording(r) {
+        if( r.status != 'inactive'){
+            console.log('recording stop')
+            r.stop()
+        }
+    }
+    </script>
+
+    <div id="webcamcontrols">
+        <button class="recordbutton" onclick="startRecording(recorder);">RECORD</button>
+        <button class="recordbutton" onclick="stopRecording(recorder);">STOP</button>
+    </div>
