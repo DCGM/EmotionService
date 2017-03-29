@@ -61,9 +61,8 @@ def parse_args():
     parser.add_argument('--input-video',
                         default='./dev_1.mp4',
                         help='Input video.')
-    parser.add_argument('--landmark-model',
-                        default='/home/alena/work/openface/models/dlib/shape_predictor_68_face_landmarks.dat',
-                        help='Path to shape predictor model.')
+    parser.add_argument('--landmark-model', required=True,
+                        help='Path to dlib shape predictor model shape_predictor_68_face_landmarks.dat.')
     parser.add_argument('--downscale-factor',
                         default=4,
                         type=float,
@@ -90,6 +89,8 @@ def parse_args():
                         help='How many frames to skip between two processed frames.')
     parser.add_argument('-v', '--verbose',
                         action='store_true')
+    parser.add_argument('--detector_path', required=True,
+                        help='Path to the mtcnn networks.')
 
     args = parser.parse_args()
 
@@ -494,7 +495,7 @@ def main():
         args.downscale_factor = max((pixels / targetPixels) ** 0.5, 1)
     print('INFO downscale_factor {}'.format(args.downscale_factor))
 
-    detector = mtcnnFaceDetector('/home/ihradis/projects/2016-08-31_face_service/MixedEmotions/data/mtcnn/')
+    detector = mtcnnFaceDetector(args.detector_path)
     tracker = multipleFaceTracker(
         landmark_model=args.landmark_model,
         detector=detector, verbose=args.verbose)

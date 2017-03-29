@@ -8,6 +8,7 @@ $SCRIPT_PATH/processVideo2.py \
     --out-dir ./processes/${VIDEO}/processVideo \
     --input-video ./uploads/${VIDEO} \
     --landmark-model ${DATA_PATH}/shape_predictor_68_face_landmarks.dat \
+    --detector_path "${MTCNN_PATH}" \
     --crop-resolution 252 --crop-scale 1.8 --downscale-factor 0
 
 
