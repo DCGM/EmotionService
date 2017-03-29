@@ -1,10 +1,13 @@
 data/Nets/
 data/vgg_face_caffe/
 service/uploads/
+service/processes/
 service/*.log
 *.pyc
 *.o
 *.pem
+*.db
+*.tmp
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
