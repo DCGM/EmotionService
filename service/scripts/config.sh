@@ -1,5 +1,6 @@
-SCRIPT_PATH=/home/ihradis/projects/2016-08-31_face_service/MixedEmotions/src
-DATA_PATH=/home/ihradis/projects/2016-08-31_face_service/MixedEmotions/data
-O_FACE=/home/ihradis/projects/2016-08-31_face_service/OpenFace/build4/bin/FeatureExtraction
-CNN_DETECTOR_PATH=/home/ihradis/projects/2016-08-31_face_service/detector2/mtcnn
+ROOT_DIR=../
+SCRIPT_PATH="${ROOT_DIR}"/src
+DATA_PATH="${ROOT_DIR}"/data
+O_FACE="${ROOT_DIR}"/OpenFace/build/bin/FeatureExtraction
+CNN_DETECTOR_PATH="${ROOT_DIR}"/mtcnn
 export PYTHONPATH=$PYTHONPATH:${CNN_DETECTOR_PATH}
