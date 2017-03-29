@@ -350,10 +350,45 @@ def json_file(filename):
                                filename + '.json')
 
 
+def createDatabse():
+    conn = sqlite3.connect(DATABASE)
+    c = conn.cursor()
+
+    c.execute('''
+CREATE TABLE requests (
+    "uuid" TEXT,
+    "status" TEXT,
+    "lastchange" REAL,
+    "original_name" TEXT
+, "created" REAL)
+''')
+
+    c.execute('''
+    CREATE TABLE jobs (
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "uuid" TEXT,
+    "command" TEXT,
+    "status" TEXT,
+    "lastchange" REAL,
+    "created" REAL,
+    "identifier" TEXT,
+    "next_job" TEXT
+    )
+    ''')
+
+
+    conn.commit()
+    conn.close()
+
+
 if __name__ == '__main__':
+
+    if not os.path.isfile(DATABASE):
+        createDatabse()
+
     app.run(
         host="0.0.0.0",
-        port=int("9000"),
+        port=int("9001"),
         debug=False,
         # threaded=True,
         processes=16,
