@@ -1,0 +1,6 @@
+[submodule "mtcnn"]
+	path = mtcnn
+	url = git@github.com:DCGM/mtcnn.git
+[submodule "OpenFace"]
+	path = OpenFace
+	url = git@github.com:DCGM/OpenFace.git
