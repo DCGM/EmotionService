@@ -23,7 +23,7 @@ make -j
 cd service;
 ./runAll.sh
 ```
-  * Upload video at `localhost:9000`
+  * Upload video at `localhost:9001`
 
 
 API
@@ -45,7 +45,7 @@ Response:
   "uuid": "0e47b9ca11ce494da23fc11b653698ae"
 }
 ```
-`Use the `uuid` in other calls to identify this video.
+Use the `uuid` in other calls to identify this video.
 
 Check processing status
 =======================
@@ -114,8 +114,10 @@ Response when done:
 
 Aggregated results
 ==================
-`[GET] /results_agg/{uuid}`
-`[GET] /results_agg/{uuid}/start1,end1;start2,end2`
+```
+[GET] /results_agg/{uuid}
+[GET] /results_agg/{uuid}/start1,end1;start2,end2
+```
  
  Returns aggregated result for time intervals. If no interval is specified, the results are aggregated accross the whole video.
 
